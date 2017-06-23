@@ -1,0 +1,14 @@
+e41477f61f9faec8fb5825a5e1e968b5 *DESCRIPTION
+43aa3fb141773ba90a7a8989a3dbaabf *NAMESPACE
+e4954c968064a40e9503353abae95aad *R/data.R
+060f0f485048ad96ceadc7b350d34b64 *R/tbl_xts.R
+8e24190d4b58ce93c9f12e9762842688 *R/xts_tbl.R
+33a5a9d4cc36fa864fe1f5ab9d0e2c13 *README.md
+1ed193e2b4ac0f38524b0ce5e9e29322 *build/vignette.rds
+2d7ba01488ce812f77bfa1694690e169 *data/TRI.rda
+085a24d2c47ab945d8621fe1cf6d279c *inst/doc/tbl2xts_vignette.Rmd
+a32ff40009a1476eea9de41927f64a32 *inst/doc/tbl2xts_vignette.html
+b219d25eace45ae0d08fc4040b91cf98 *man/TRI.Rd
+7f3bc64004b1250cb05ef3ab45559ddf *man/tbl_xts.Rd
+9e1e24820d66340e6a770bd536ba8378 *man/xts_tbl.Rd
+085a24d2c47ab945d8621fe1cf6d279c *vignettes/tbl2xts_vignette.Rmd
