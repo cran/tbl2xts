@@ -1,6 +1,6 @@
 Package: tbl2xts
-Version: 0.1.0
-Date: 2017-06-20
+Version: 0.1.1
+Date: 2017-07-24
 Type: Package
 Title: Convert Tibbles or Data Frames to Xts Easily
 Author: Nico Katzke
@@ -13,11 +13,11 @@ Depends: R (>= 3.2.1)
 Imports: xts, zoo, dplyr, lazyeval, PerformanceAnalytics
 License: GPL-3
 LazyData: TRUE
-RoxygenNote: 6.0.0
+RoxygenNote: 6.0.1
 Suggests: knitr, rmarkdown
 Repository: CRAN
 NeedsCompilation: yes
 ByteCompile: yes
 VignetteBuilder: knitr
-Packaged: 2017-06-23 08:54:22 UTC; nicokatzke
-Date/Publication: 2017-06-23 09:13:13 UTC
+Packaged: 2017-07-25 08:33:19 UTC; nico.katzke
+Date/Publication: 2017-07-25 09:32:43 UTC
