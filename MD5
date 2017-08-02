@@ -1,13 +1,13 @@
-8d89030b545b38a9b0c99f6215a27ed7 *DESCRIPTION
+0ff840a2e47f3d1bb57ff2ab4169a514 *DESCRIPTION
 43aa3fb141773ba90a7a8989a3dbaabf *NAMESPACE
 e4954c968064a40e9503353abae95aad *R/data.R
-c78d4b758051d314c2eb83a77dbe42d9 *R/tbl_xts.R
+003e1d3e8e4b7d57e1bffa6d733c31f9 *R/tbl_xts.R
 8e24190d4b58ce93c9f12e9762842688 *R/xts_tbl.R
 33a5a9d4cc36fa864fe1f5ab9d0e2c13 *README.md
-1ed193e2b4ac0f38524b0ce5e9e29322 *build/vignette.rds
+1914e541e26fe68ac1d4ed5a8d63d3c2 *build/vignette.rds
 2d7ba01488ce812f77bfa1694690e169 *data/TRI.rda
 085a24d2c47ab945d8621fe1cf6d279c *inst/doc/tbl2xts_vignette.Rmd
-761537dc1e9dbb2d6a76bbed81b34f21 *inst/doc/tbl2xts_vignette.html
+a76f2fa96d5f18e51bd42aa9a8a5ad11 *inst/doc/tbl2xts_vignette.html
 b219d25eace45ae0d08fc4040b91cf98 *man/TRI.Rd
 7f3bc64004b1250cb05ef3ab45559ddf *man/tbl_xts.Rd
 9e1e24820d66340e6a770bd536ba8378 *man/xts_tbl.Rd

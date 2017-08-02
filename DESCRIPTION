@@ -1,6 +1,6 @@
 Package: tbl2xts
-Version: 0.1.1
-Date: 2017-07-24
+Version: 0.1.2
+Date: 2017-08-02
 Type: Package
 Title: Convert Tibbles or Data Frames to Xts Easily
 Author: Nico Katzke
@@ -19,5 +19,5 @@ Repository: CRAN
 NeedsCompilation: yes
 ByteCompile: yes
 VignetteBuilder: knitr
-Packaged: 2017-07-25 08:33:19 UTC; nico.katzke
-Date/Publication: 2017-07-25 09:32:43 UTC
+Packaged: 2017-08-02 13:44:29 UTC; nico.katzke
+Date/Publication: 2017-08-02 13:50:58 UTC
