@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <meta name="author" content="NF Katzke" />
 
-<meta name="date" content="2019-08-01" />
+<meta name="date" content="2020-07-10" />
 
 <title>Moving From Tbl To Xts Easily</title>
 
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
 
 
 
@@ -32,9 +47,6 @@ padding-right: 2em;
 font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 font-size: 14px;
 line-height: 1.35;
-}
-#header {
-text-align: center;
 }
 #TOC {
 clear: both;
@@ -203,7 +215,8 @@ code > span.st { color: #d14; }
 code > span.co { color: #888888; font-style: italic; } 
 code > span.ot { color: #007020; } 
 code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
 
 
@@ -218,7 +231,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Moving From Tbl To Xts Easily</h1>
 <h4 class="author">NF Katzke</h4>
-<h4 class="date">2019-08-01</h4>
+<h4 class="date">2020-07-10</h4>
 
 
 
@@ -230,56 +243,62 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="examples" class="section level1">
 <h1>Examples</h1>
 <p>To illustrate the ease with which tbl2xts transforms data.frames or tbl_dfs into xts format, consider the following example.</p>
+<p>We use a simple toy dataset to illustrate. As we are transforming</p>
 <div id="example-1" class="section level2">
 <h2>Example 1</h2>
-<p>Load the tbl_df data set included with the package, and transform it into xts format.</p>
+<p>Transform a dataframe into xts format:</p>
 <pre><code>library(dplyr)
 library(tbl2xts)
-tbldata &lt;- TRI
-xtsdata &lt;- tbldata %&gt;% 
-tbl_xts(., cols_to_xts = &quot;TRI&quot;, spread_by = &quot;Country&quot;, spread_name_pos = &quot;Suffix&quot;)</code></pre>
-<p>Notice that the column name convention is to use the spread_by name, underscore, column name. In the example above, it is Country_TRI.</p>
-<div id="to-now-transform-the-xts-object-back-into-a-tbl_df-object-simply-use-the-inverse-command" class="section level3">
-<h3>To now transform the xts object back into a tbl_df() object, simply use the inverse command:</h3>
-<pre><code>xtsdata %&gt;% xts_tbl()</code></pre>
+xtsdata &lt;- 
+tbl2xts::TRI %&gt;% 
+tbl_xts(., cols_to_xts = TRI, spread_by = Country)</code></pre>
+<p>Notice as of version 1.0.0 of this package, inputs are now quo_sures ~ so you don’t have to use quotations for parameters.</p>
 </div>
+<div id="note" class="section level2">
+<h2>Note</h2>
+<p>The input requires the data to be in data.frame() or tbl_df() form, with a valid date column being provided (similar to the requirement for the xts package). The function will check if a column <em>date</em>, <em>DATE</em>, or <em>Date</em> exists, or alternatively look for a valid timeBased object in your worfkile and rename it Date. This column can be either a Date, POSIXct, chron, yearmon, yearqtr or timeDate (see ?timeBased) column. The validity of the date column can be tested using:</p>
+<pre><code>data(TRI)
+TRI[,&quot;Date&quot;] %&gt;% .[[1]] %&gt;% xts::timeBased()</code></pre>
+<p>If TRUE, it is a valid date column.</p>
 </div>
 <div id="example-2" class="section level2">
 <h2>Example 2</h2>
-<p>tbl_xts also facilitates the use of tbl_df dataframes in packages that use xts. As an illustration, see the output for TRI with the package PerformanceAnalytics. As we are working with Total Return Index values, suppose we wanted to calculate the weekly returns, and then the … using PerformanceAnalytics. This can now be achieved with neat code as follows:</p>
+<p>We could also add a suffix or prefix to the column name created. In the example below, adding spread_name_pos = “Suffix” makes columns <Country>_TRI.</p>
+<pre><code>xtsdata &lt;- tbl2xts::TRI %&gt;% tbl_xts(., cols_to_xts = TRI, spread_by = Country, spread_name_pos = &quot;Suffix&quot;)</code></pre>
+<p>You could also easily transform multiple numeric columns into xts using the spread_by functionality:</p>
+<pre><code>spread_multiple &lt;- tbl2xts::TRI %&gt;% tbl_xts(., cols_to_xts = c(&quot;TRI&quot;, &quot;Return&quot;), spread_by = Country)</code></pre>
+<p>Notice for this example, I forced a spread_name_pos = “Suffix” to allow for differentiation as you chose to spread_by and have multiple cols_to_xts.</p>
+<div id="to-now-transform-the-xts-object-back-into-a-tbl_df-object-simply-use-the-inverse-command" class="section level3">
+<h3>To now transform the xts object back into a tbl_df() object, simply use the inverse command:</h3>
+<pre><code>xtsdata &lt;- tbl2xts::TRI %&gt;% tbl_xts(., cols_to_xts = TRI, spread_by = Country, spread_name_pos = &quot;Suffix&quot;)
+xtsdata %&gt;% xts_tbl()</code></pre>
+</div>
+</div>
+<div id="example-3-using-downstream-packages" class="section level2">
+<h2>Example 3: using downstream packages</h2>
+<p>tbl_xts also facilitates the use of tbl_df data frames in packages that use xts. As an illustration, see the output for TRI with the package PerformanceAnalytics. As we are working with Total Return Index values, suppose we wanted to calculate the weekly returns, and then the … using PerformanceAnalytics. This can now be achieved with neat code as follows:</p>
 <pre><code>library(dplyr)
 library(tbl2xts)
 library(PerformanceAnalytics)
-tbldata &lt;- TRI
-tbldata %&gt;% 
-tbl_xts(., cols_to_xts = &quot;TRI&quot;, spread_by = &quot;Country&quot;) %&gt;% 
-lapply(.,Return.calculate, &quot;discrete&quot;) %&gt;% Reduce(merge,.) %&gt;% table.DownsideRisk(.)</code></pre>
-<p>Note that lapply was used to apply the Return.Calculate to each column, while Reduce was used to merge all the lists created using lapply into a single dataframe. We then pipe all the returns into, e.g., the table.DownsideRisk function, or any other applicable function in the PA package.</p>
+tbl2xts::TRI %&gt;% tbl_xts(., cols_to_xts = TRI, spread_by = Country) %&gt;% 
+PerformanceAnalytics::Return.calculate(., &quot;discrete&quot;) %&gt;% 
+PerformanceAnalytics::Return.cumulative(.)</code></pre>
 </div>
-<div id="example-3" class="section level2">
-<h2>Example 3:</h2>
-<p>Here I show how you can easily do quite advanced calculations and seemlessly move from tbl to xts back to tbl. Below I use xts’ apply.yearly and PerformanceAnalytics’ suite of calcs that allow us to do some nice calculations easily:</p>
-<pre><code>TRI %&gt;% tbl_xts(., spread_by = &quot;Country&quot;) %&gt;%  
+<div id="example-4" class="section level2">
+<h2>Example 4</h2>
+<p>Here I show how you can easily do quite advanced calculations and seemlessly move from tbl to xts back to tbl. Below I use xts’ apply.yearly and PerformanceAnalytics’ suite of calculations that allow us to do some nice analytics easily:</p>
+<pre><code>tbl2xts::TRI %&gt;% tbl_xts(., cols_to_xts = TRI, spread_by = Country) %&gt;%  
 PerformanceAnalytics::Return.calculate(.) %&gt;% 
 xts::apply.yearly(., FUN = PerformanceAnalytics::StdDev.annualized) %&gt;% 
-xts_tbl</code></pre>
+xts_tbl %&gt;% mutate(Year = format(date, &quot;%Y&quot;)) %&gt;% select(Year, everything(), -date)</code></pre>
 <p>Note how easy we could do quite advanced calculations in a single pipe. E.g. if tasked with producing a plot for the annual CVaR numbers for our countries:</p>
 <pre><code>library(ggplot2)
 library(tidyr)
-TRI %&gt;% tbl_xts(., spread_by = &quot;Country&quot;) %&gt;%  
+TRI %&gt;% tbl_xts(., cols_to_xts = TRI, spread_by = Country) %&gt;%  
 PerformanceAnalytics::Return.calculate(.) %&gt;% 
 xts::apply.yearly(., FUN = PerformanceAnalytics::CVaR) %&gt;% 
 xts_tbl %&gt;% tidyr::gather(Country, CVaR, -date) %&gt;% 
 ggplot() + geom_line(aes(date, CVaR)) + theme_bw() + facet_wrap(~Country)</code></pre>
-</div>
-<div id="note" class="section level2">
-<h2>Note</h2>
-<p>The input requires the data to be in data.frame() or tbl_df() form, with a valid date column being provided (similar to the requirement for the xts package). The function will check if a column date, DATE, or Date exists, or alternatively look for a valid timeBased object in your worfkile and rename it Date. This column can be either a Date, POSIXct, chron, yearmon, yearqtr or timeDate (see ?timeBased) column. The validity of the date column can be tested using:</p>
-<pre><code>library(dplyr)
-library(tbl2xts)
-data(TRI)
-TRI[,&quot;Date&quot;] %&gt;% .[[1]] %&gt;% timeBased()</code></pre>
-<p>If TRUE, it is a valid date column.</p>
 </div>
 </div>
 
