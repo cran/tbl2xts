@@ -1,5 +1,5 @@
 Package: tbl2xts
-Version: 1.0.1
+Version: 1.0.2
 Date: 2020-07-21
 Type: Package
 Title: Convert Tibbles or Data Frames to Xts Easily
@@ -12,7 +12,7 @@ Maintainer: Nico Katzke <nfkatzke@gmail.com>
 BugReports: https://github.com/nicktz/tbl2xts/issues
 URL: http://tbl2xts.nfkatzke.com
 Depends: R (>= 3.3.1)
-Imports: xts, zoo, dplyr (>= 1.0.0), tibble, rlang
+Imports: xts, zoo, dplyr (>= 0.8.0.0), tibble, rlang
 License: GPL-3
 LazyData: TRUE
 RoxygenNote: 7.1.1
@@ -21,6 +21,6 @@ Repository: CRAN
 NeedsCompilation: yes
 ByteCompile: yes
 VignetteBuilder: knitr
-Packaged: 2020-07-21 09:22:05 UTC; nico.katzke
+Packaged: 2020-07-21 12:47:07 UTC; nico.katzke
 Author: Nico Katzke [aut, cre]
-Date/Publication: 2020-07-21 09:40:02 UTC
+Date/Publication: 2020-08-04 12:40:03 UTC
